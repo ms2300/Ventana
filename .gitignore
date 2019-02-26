@@ -2,4 +2,7 @@
 /dist/
 /*.egg-info
 /build/
+/_build/
+Makefile
+conf.py
 setup.py

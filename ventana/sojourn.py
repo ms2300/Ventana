@@ -72,6 +72,14 @@ def clean_sojourns(sojourns, identity):
     return combine_sojourns(clean_s, clean_id)
 
 def sojourn_1x(counts):
+    """
+    Sojourn second-by-second estimation of METs based on second-by-second vertical counts
+
+    :param counts: Second-by-second vertical counts (numbers)
+    :type counts: list
+    :return: Second-by-second estimation of METs (floats)
+    :rtype: list
+    """
     base_identity = []
     sojourns = []
     for sojourn in yield_sojourns(counts):
