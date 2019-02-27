@@ -7,7 +7,7 @@ Provides 1x and 3x methods for validation purposes
 """
 
 import numpy as np
-from met_estimator.METs import cr2_mets
+from ventana.METs import cr2_mets
 
 sit_cut = 90
 act_cut = 10

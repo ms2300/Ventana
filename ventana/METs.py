@@ -8,7 +8,7 @@ Provides 4 different methods for validation purposes
 
 import numpy as np
 from math import log
-from met_estimator.utils import chunks
+from ventana.utils import chunks
 
 # solve memory issues
 # look to memoize and to reduce iterations

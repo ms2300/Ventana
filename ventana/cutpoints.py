@@ -7,7 +7,7 @@ Provides 3 different methods for validation purposes
 """
 
 import numpy as np
-from met_estimator.utils import chunks
+from ventana.utils import chunks
 
 def freedson_cut(val):
     if val < 100:
