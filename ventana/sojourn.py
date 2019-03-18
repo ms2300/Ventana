@@ -75,6 +75,8 @@ def sojourn_1x(counts, met_method = cr2_mets):
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """
+
+    # base_identity contains list of basic estimated activities of sojourns
     base_identity = []
     sojourns = []
     for sojourn in yield_sojourns(counts):
@@ -88,6 +90,8 @@ def sojourn_1x(counts, met_method = cr2_mets):
     pred = []
     for sojourn, level in clean_sojourns(sojourns, base_identity):
         mets = []
+        # if the sojourn is an activity just use standard met estimating function
+        # else set mets in non-activity sojourn as a predefined low constant
         if level == "activity":
             mets = met_method(sojourn)
         else:

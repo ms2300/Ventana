@@ -4,5 +4,4 @@
 /build/
 /_build/
 Makefile
-conf.py
-setup.py
+settings.py
