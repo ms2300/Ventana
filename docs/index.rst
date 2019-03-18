@@ -12,7 +12,6 @@ Ventana
    METs
    cutpoints
    sojourn
-   settings
 
 Examples
 ===================================
