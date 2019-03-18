@@ -25,7 +25,9 @@ def freedson(counts, time_freq = 60):
     Freedson second-by-second classification of activity level based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to classify activity level, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """
@@ -50,7 +52,9 @@ def sasaki(counts, time_freq = 60):
     Sasaki second-by-second classification of activity level based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to classify activity level, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """
@@ -75,7 +79,9 @@ def nhanes(counts, time_freq = 60):
     Nhanes second-by-second classification of activity level based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to classify activity level, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """

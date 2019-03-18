@@ -40,7 +40,11 @@ def cr2_mets(counts, chunk_freq = 10, time_freq = 6):
     Crouter2 second-by-second estimation of METs based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param chunk_freq: Number of seconds that values are grouped into for analysis, default 10
+    :param time_freq: Number of chunks from chunk_freq that are averaged to find METs, default 6
     :type counts: list
+    :type chunk_freq: int
+    :type time_freq: int
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """
@@ -59,7 +63,9 @@ def c_mets(counts, time_freq = 60):
     Original crouter second-by-second estimation of METs based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to estimate METs, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """
@@ -76,7 +82,9 @@ def sasaki_mets(counts, time_freq = 60):
     Sasaki second-by-second estimation of METs based on second-by-second vector magnitude counts
 
     :param counts: Second-by-second vector magnitude counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to estimate METs, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """
@@ -91,7 +99,9 @@ def freedson_mets(counts, time_freq = 60):
     Freedson second-by-second estimation of METs based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param time_freq: Number of seconds that are grouped together to estimate METs, default 60
     :type counts: list
+    :type time_freq: int
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """

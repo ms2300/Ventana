@@ -71,7 +71,9 @@ def sojourn_1x(counts, met_method = cr2_mets):
     Sojourn second-by-second estimation of METs based on second-by-second vertical counts
 
     :param counts: Second-by-second vertical counts (numbers)
+    :param met_method: name of function used to estimate METs
     :type counts: list
+    :type met_method: func
     :return: Second-by-second estimation of METs (floats)
     :rtype: list
     """
