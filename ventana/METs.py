@@ -7,9 +7,9 @@ Provides 4 different methods for validation purposes
 """
 
 import numpy as np
-import ventana.settings as const
+import settings as const
 from math import log
-from ventana.utils import chunks, get_indices
+from utils import chunks, get_indices
 
 def cr2_mets_est(i, val, agg_vals, agg_sum):
     slicer = get_indices(i, len(agg_sum))

@@ -7,8 +7,8 @@ Provides 1x and 3x methods for validation purposes
 """
 
 import numpy as np
-import ventana.settings as const
-from ventana.METs import cr2_mets
+import settings as const
+from METs import cr2_mets
 
 def yield_sojourns(values):
     running = []

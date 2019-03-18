@@ -7,8 +7,8 @@ Provides 3 different methods for validation purposes
 """
 
 import numpy as np
-import ventana.settings as settings
-from ventana.utils import chunks
+import settings as settings
+from utils import chunks
 
 def freedson_cut(val):
     if val < settings.FREEDSON_SED:
