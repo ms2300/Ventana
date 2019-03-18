@@ -12,6 +12,7 @@ Ventana
    METs
    cutpoints
    sojourn
+   settings
 
 Examples
 ===================================
@@ -21,8 +22,8 @@ Examples
         import pandas as pd
         from ventana.sojourn import sojourn_1x
 
-        df = pd.read_df("path")
-        df["sojourn_est"] = sojourn_1x(df["y_counts"])
+        df = pd.read_csv("path")
+        df["sojourn_est"] = sojourn_1x(df["vertical_counts"])
 
 
 
