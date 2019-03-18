@@ -7,13 +7,8 @@ Provides 1x and 3x methods for validation purposes
 """
 
 import numpy as np
+import ventana.settings as const
 from ventana.METs import cr2_mets
-
-sit_cut = 90
-act_cut = 10
-cut_1 = 0.05
-cut_2 = 0.12
-cut_3 = 0.55
 
 def yield_sojourns(values):
     running = []
@@ -27,7 +22,7 @@ def yield_sojourns(values):
             flag = not flag
 
 def is_too_short_undet(ident, length):
-    return (ident == "undetermined") and (length < act_cut)
+    return (ident == "undetermined") and (length < const.ACTIVITY_CUT)
 
 def combine_sojourns(clean_s, clean_id):
     skip = False
@@ -71,7 +66,7 @@ def clean_sojourns(sojourns, identity):
             clean_id.append(identity[i])
     return combine_sojourns(clean_s, clean_id)
 
-def sojourn_1x(counts):
+def sojourn_1x(counts, met_method = cr2_mets):
     """
     Sojourn second-by-second estimation of METs based on second-by-second vertical counts
 
@@ -83,32 +78,29 @@ def sojourn_1x(counts):
     base_identity = []
     sojourns = []
     for sojourn in yield_sojourns(counts):
-        if (sojourn[0] == 0) and (len(sojourn) > sit_cut):
+        if (sojourn[0] == 0) and (len(sojourn) > const.SIT_CUT):
             base_identity.append("sedentary")
-        elif (sojourn[0] != 0) and (len(sojourn) > act_cut):
+        elif (sojourn[0] != 0) and (len(sojourn) > const.ACTIVITY_CUT):
             base_identity.append("activity")
         else:
             base_identity.append("undetermined")
         sojourns.append(sojourn)
     pred = []
     for sojourn, level in clean_sojourns(sojourns, base_identity):
-        # four options
-        # sendentary / undetermined can fall into one of three options
-        # activity used MET method
         mets = []
         if level == "activity":
-            mets = cr2_mets(sojourn)
+            mets = met_method(sojourn)
         else:
             val_cut = np.mean(sojourn)
-            if val_cut > cut_3:
-                mets = cr2_mets(sojourn)
-            elif (val_cut > cut_1) and (val_cut <= cut_2) and (len(sojourn) > sit_cut):
-                mets = [1.2] * len(sojourn)
-            elif (val_cut > cut_1) and (val_cut <= cut_2) and (len(sojourn) <= sit_cut):
-                mets = [1.5] * len(sojourn)
-            elif (val_cut > cut_2) and (val_cut <= cut_3):
-                mets = [1.7] * len(sojourn)
+            if val_cut > const.CUT_HIGH:
+                mets = met_method(sojourn)
+            elif (val_cut > const.CUT_MIN) and (val_cut <= const.CUT_MED) and (len(sojourn) > const.SIT_CUT):
+                mets = [const.SOJ_METS_MED] * len(sojourn)
+            elif (val_cut > const.CUT_MIN) and (val_cut <= const.CUT_MED) and (len(sojourn) <= const.SIT_CUT):
+                mets = [const.SOJ_METS_HIGH] * len(sojourn)
+            elif (val_cut > const.CUT_MED) and (val_cut <= const.CUT_HIGH):
+                mets = [const.SOJ_METS_VIG] * len(sojourn)
             else:
-                mets = [1.0] * len(sojourn)
+                mets = [const.SOJ_METS_MIN] * len(sojourn)
         pred.extend(mets)
     return pred

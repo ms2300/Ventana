@@ -7,19 +7,20 @@ Provides 3 different methods for validation purposes
 """
 
 import numpy as np
+import ventana.settings as settings
 from ventana.utils import chunks
 
 def freedson_cut(val):
-    if val < 100:
+    if val < settings.FREEDSON_SED:
         return "sedentary"
-    elif val < 1951:
+    elif val < settings.FREEDSON_LIGHT:
         return "light"
-    elif val < 5274:
+    elif val < settings.FREEDSON_MOD:
         return "moderate"
     else:
         return "vigourous"
 
-def freedson(counts):
+def freedson(counts, time_freq = 60):
     """
     Freedson second-by-second classification of activity level based on second-by-second vertical counts
 
@@ -28,22 +29,23 @@ def freedson(counts):
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """
-    minute_est = [freedson_cut(sum(x)) for x in chunks(counts, 60)]
+    minute_est = [freedson_cut(sum(x)) for x in chunks(counts, time_freq)]
     second_est = []
-    [second_est.extend([x] * 60) for x in minute_est]
+    length = min(len(counts), time_freq)
+    [second_est.extend([x] * length) for x in minute_est]
     return np.array(second_est)
 
 def sasaki_cut(val):
-    if val < 2690:
+    if val < settings.SASAKI_LIGHT:
         return "light"
-    elif val < 6166:
+    elif val < settings.SASAKI_MOD:
         return "moderate"
-    elif val < 9642:
+    elif val < settings.SASAKI_VIG:
         return "vigourous"
     else:
         return "very vigourous"
 
-def sasaki(counts):
+def sasaki(counts, time_freq = 60):
     """
     Sasaki second-by-second classification of activity level based on second-by-second vertical counts
 
@@ -52,22 +54,23 @@ def sasaki(counts):
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """
-    minute_est = [sasaki_cut(sum(x)) for x in chunks(counts, 60)]
+    minute_est = [sasaki_cut(sum(x)) for x in chunks(counts, time_freq)]
     second_est = []
-    [second_est.extend([x] * 60) for x in minute_est]
+    length = min(len(counts), time_freq)
+    [second_est.extend([x] * length) for x in minute_est]
     return np.array(second_est)
 
 def nhanes_cut(val):
-    if val < 100:
+    if val < settings.NHANES_SED:
         return "sedentary"
-    elif val < 2019:
+    elif val < settings.NHANES_LIGHT:
         return "light"
-    elif val < 5998:
+    elif val < settings.NHANES_MOD:
         return "moderate"
     else:
         return "vigourous"
 
-def nhanes(counts):
+def nhanes(counts, time_freq = 60):
     """
     Nhanes second-by-second classification of activity level based on second-by-second vertical counts
 
@@ -76,8 +79,9 @@ def nhanes(counts):
     :return: Second-by-second classification of activity levels (strings)
     :rtype: list
     """
-    minute_est = [nhanes_cut(sum(x)) for x in chunks(counts, 60)]
+    minute_est = [nhanes_cut(sum(x)) for x in chunks(counts, time_freq)]
     second_est = []
-    [second_est.extend([x] * 60) for x in minute_est]
+    length = min(len(counts), time_freq)
+    [second_est.extend([x] * length) for x in minute_est]
     return np.array(second_est)
     
