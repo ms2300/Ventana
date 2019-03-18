@@ -3,23 +3,30 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to ventana's documentation!
+Ventana
 ===================================
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
    METs
    cutpoints
    sojourn
 
+Examples
+===================================
+
+    .. code-block:: python
+
+        import pandas as pd
+        from ventana.sojourn import sojourn_1x
+
+        df = pd.read_df("path")
+        df["sojourn_est"] = sojourn_1x(df["y_counts"])
 
 
 
 Indices and tables
-==================
+===================================
 
-* :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
