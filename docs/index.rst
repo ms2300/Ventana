@@ -12,6 +12,7 @@ Ventana
    METs
    cutpoints
    sojourn
+   utils
 
 Examples
 ===================================
