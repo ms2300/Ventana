@@ -3,7 +3,7 @@ Sojourn
 =============
 Defines methods for classifying activity levels based on a second-by-second input using sojourn methods.
 
-Provides 1x and 3x methods for validation purposes
+Provides 1x and a method that outputs that list of clumped data
 """
 
 import numpy as np
@@ -67,6 +67,27 @@ def clean_sojourns(sojourns, identity):
             clean_id.append(identity[i])
     return combine_sojourns(clean_s, clean_id)
 
+def get_clumps(counts):
+    """
+    Sojourn second-by-second estimation of METs based on second-by-second vertical counts
+
+    :param counts: Second-by-second vertical counts (numbers)
+    :type counts: list
+    :return: List of tuples that can contains (sojourn, identity) where sojourn is a second-by-second list of vertical counts and identity is a string in ("undetermined", "sedentary", "activity")
+    :rtype: list
+    """
+    base_identity = []
+    sojourns = []
+    for sojourn in yield_sojourns(counts):
+        if (sojourn[0] == 0) and (len(sojourn) > const.SIT_CUT):
+            base_identity.append("sedentary")
+        elif (sojourn[0] != 0) and (len(sojourn) > const.ACTIVITY_CUT):
+            base_identity.append("activity")
+        else:
+            base_identity.append("undetermined")
+        sojourns.append(sojourn)
+    return clean_sojourns(sojourns, base_identity)
+
 def sojourn_1x(counts, met_method = cr2_mets):
     """
     Sojourn second-by-second estimation of METs based on second-by-second vertical counts
@@ -79,22 +100,10 @@ def sojourn_1x(counts, met_method = cr2_mets):
     :rtype: list
     """
 
-    # base_identity contains list of basic estimated activities of sojourns
-    base_identity = []
-    sojourns = []
-    for sojourn in yield_sojourns(counts):
-        if (sojourn[0] == 0) and (len(sojourn) > const.SIT_CUT):
-            base_identity.append("sedentary")
-        elif (sojourn[0] != 0) and (len(sojourn) > const.ACTIVITY_CUT):
-            base_identity.append("activity")
-        else:
-            base_identity.append("undetermined")
-        sojourns.append(sojourn)
+    clumps = get_clumps(counts)
     pred = []
-    for (sojourn, level) in clean_sojourns(sojourns, base_identity):
+    for (sojourn, level) in clumps:
         mets = []
-        # if the sojourn is an activity just use standard met estimating function
-        # else set mets in non-activity sojourn as a predefined low constant
         if level == "activity":
             mets = met_method(sojourn)
         else:
