@@ -20,28 +20,29 @@ def yield_sojourns(values):
             yield running
             running = [value]
             flag = not flag
+    yield(running)
 
 def is_too_short_undet(ident, length):
     return (ident == "undetermined") and (length < const.ACTIVITY_CUT)
 
 def combine_sojourns(clean_s, clean_id):
     skip = False
+    fin = []
     for i, soj in enumerate(clean_s):
         if skip:
             skip = False
             continue
         if is_too_short_undet(clean_id[i], len(soj)):
             if (i == 0) or (i + 1 == len(clean_id)):
-                yield soj, "undetermined"
+                fin.append((soj, "undetermined"))
             elif clean_id[i - 1] == clean_id[i + 1]:
-                yield clean_s[i - 1] + soj + clean_s[i + 1], clean_id[i - 1]
+                fin[-1] = (fin[-1][0] + soj + clean_s[i + 1], clean_id[i - 1])
                 skip = True
             else:
-                yield clean_s[i - 1] + soj, clean_id[i - 1]
+                fin[-1] = (fin[-1][0] + soj, clean_id[i - 1])
         else:
-            if (i + 1 < len(clean_id)) and is_too_short_undet(clean_id[i + 1], len(clean_s[i + 1])):
-                continue
-            yield soj, clean_id[i]
+            fin.append((soj, clean_id[i]))
+    return fin
 
 
 
@@ -90,7 +91,7 @@ def sojourn_1x(counts, met_method = cr2_mets):
             base_identity.append("undetermined")
         sojourns.append(sojourn)
     pred = []
-    for sojourn, level in clean_sojourns(sojourns, base_identity):
+    for (sojourn, level) in clean_sojourns(sojourns, base_identity):
         mets = []
         # if the sojourn is an activity just use standard met estimating function
         # else set mets in non-activity sojourn as a predefined low constant

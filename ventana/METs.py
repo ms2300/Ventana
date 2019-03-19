@@ -56,7 +56,7 @@ def cr2_mets(counts, chunk_freq = 10, time_freq = 6):
     second_mets = []
     length = min(len(counts), chunk_freq * time_freq)
     [second_mets.extend([x] * length) for x in minute_mets]
-    return np.array(second_mets)
+    return np.array(second_mets[:len(counts)])
 
 def c_mets(counts, time_freq = 60):
     """
@@ -75,7 +75,7 @@ def c_mets(counts, time_freq = 60):
     second_mets = []
     length = min(len(counts), time_freq)
     [second_mets.extend([x] * length) for x in METs]
-    return np.array(second_mets)
+    return np.array(second_mets[:len(counts)])
 
 def sasaki_mets(counts, time_freq = 60):
     """
@@ -92,7 +92,7 @@ def sasaki_mets(counts, time_freq = 60):
     second_mets = []
     length = min(len(counts), time_freq)
     [second_mets.extend([x] * length) for x in METs]
-    return np.array(second_mets)
+    return np.array(second_mets[:len(counts)])
 
 def freedson_mets(counts, time_freq = 60):
     """
@@ -109,7 +109,7 @@ def freedson_mets(counts, time_freq = 60):
     second_mets = []
     length = min(len(counts), time_freq)
     [second_mets.extend([x] * length) for x in METs]
-    return np.array(second_mets)
+    return np.array(second_mets[:len(counts)])
 
 
 

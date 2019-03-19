@@ -35,7 +35,7 @@ def freedson(counts, time_freq = 60):
     second_est = []
     length = min(len(counts), time_freq)
     [second_est.extend([x] * length) for x in minute_est]
-    return np.array(second_est)
+    return np.array(second_est[:len(counts)])
 
 def sasaki_cut(val):
     if val < settings.SASAKI_LIGHT:
@@ -49,7 +49,7 @@ def sasaki_cut(val):
 
 def sasaki(counts, time_freq = 60):
     """
-    Sasaki second-by-second classification of activity level based on second-by-second vertical counts
+    Sasaki second-by-second classification of activity level based on second-by-second vector magnitude
 
     :param counts: Second-by-second vertical counts (numbers)
     :param time_freq: Number of seconds that are grouped together to classify activity level, default 60
@@ -62,7 +62,7 @@ def sasaki(counts, time_freq = 60):
     second_est = []
     length = min(len(counts), time_freq)
     [second_est.extend([x] * length) for x in minute_est]
-    return np.array(second_est)
+    return np.array(second_est[:len(counts)])
 
 def nhanes_cut(val):
     if val < settings.NHANES_SED:
@@ -89,5 +89,5 @@ def nhanes(counts, time_freq = 60):
     second_est = []
     length = min(len(counts), time_freq)
     [second_est.extend([x] * length) for x in minute_est]
-    return np.array(second_est)
+    return np.array(second_est[:len(counts)])
     
